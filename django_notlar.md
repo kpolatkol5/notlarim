@@ -8,12 +8,8 @@
 - python manage.py startapp uygulamaadi
 
 - eklediğin uygulamayi root projede settings dosyasina ekle virgükl koymayi unutma
-
-# HTTP TALEPLERİ
-
-- **reguest** : talep istek anlaminda 
-<br>
-<br><br>
+  
+<br><hr>
 
 ## EKLEDİĞİN UYGULAMA İÇİNDE URL YAPISI OLUŞTUR
 
@@ -27,11 +23,6 @@
 ```
 <br>
 
-- ekldeiğimiz urls dosyasina urls listesine **path** tanimladik şimdi burdaki path in içindeki "" içine yazdiğimiz deger arama motorundaki **uzanti adi** oluyor peki bu uzantiyi nerden nasil alacak? onu da yanda belirttiğimiz views dosyasindan çekecez views dosyasina da bir fonksiyon tanimladik **views.fonksiyon_adi** ile hangi fonksiyonu görüntülemek istersek onun adini yanda belirtiyoruz yukarıda tanımladığımız import işlemlerinde views dosyasını da import etmiş olduk **from . import views**  bu şekilde urls.py dosyasina views dosyasini import ediyoruz bu kod views dosyasindaki tüm foksiyonlari import edecektir
-
-
-<br>
-
 ```python
     urlpatterns = [
         path("" ,views.ana_sayfa , name=" ana_sayfa"),
@@ -40,8 +31,14 @@
 ```
 <br>
 
+- Ekldeiğimiz **urls** dosyasinadaki urls listesine **path** tanimladik şimdi burdaki path in içindeki "" içine yazdığımız deger arama motorundaki **uzanti adi** oluyor peki bu uzantiyi nerden nasil alacak? Onu da yanda belirttiğimiz views dosyasındaki fonksiyonda tanımlayacağız. Views dosyasina da bir fonksiyon tanimladik **views.fonksiyon_adi** ile hangi fonksiyonu görüntülemek istersek onun adini yanda belirtiyoruz. Yukarıda tanımladığımız import işlemlerinde views dosyasını da import etmiş olduk **from . import views**  bu şekilde **urls.py** dosyasina views dosyasini import ediyoruz bu kod views dosyasindaki tüm foksiyonlari import edecektir
 
-- peki views dosyasina nasil  fonksiyon tanimlanir?
+
+<br>
+
+
+
+- Peki views dosyasina nasil  fonksiyon tanimlanir?
 <br>
 
 
@@ -53,7 +50,7 @@
 
 <br>
 
--  şimdi biz buraya kadar eklediğimiz uygulamadaki url yapisi ve gereken fonksiyonlari tanimladik şimdi biz kurduğumuz uygulama içerisinde tanımladığımız urls dosyasını  root projeye eklememiz gerekiyor bunun için root projedeki **urls.py** dosyasina gidiyoruz.
+-  Şimdi biz buraya kadar eklediğimiz uygulamadaki url yapisi ve gereken fonksiyonlari tanimladik. Artık kurduğumuz uygulama içerisinde tanımladığımız urls dosyasını  root projeye **import etmemiz** gerekiyor. Bunun için root projedeki **urls.py** dosyasina gidiyoruz.
 
 <br>
 
@@ -61,7 +58,7 @@
 ### SIRASIYLA
 <br>
 
-1. ilk başta include import etmemiz gerekiyor path in yanina hemen , koyup import yaziyoruz bu import bize farkli uygulamada oluşturdugumuz url yapilarini ana root projeye tanimlamamizi sağlar.
+1. ilk başta include import etmemiz gerekiyor path in yanina hemen **, koyup import** yaziyoruz bu import bize farkli uygulamada oluşturdugumuz url yapilarini ana  projedeki urls dosyasına  eklememizi sağlar.
 
 <br>
 
@@ -86,7 +83,7 @@ urlpatterns = [
 
 
 ### NOT :
-- eğer root projedeki urls yapisindaki path e bir değer girersen uygulamada oluşturduğun uzantilar girdiğin degerin alt uznatilari olacaktir mesela
+- Eğer root projedeki urls yapisindaki path e bir değer girersen uygulamada oluşturduğun uzantilar girdiğin degerin alt uznatilari olacaktir mesela
 
 
 ```python
@@ -120,15 +117,14 @@ urlpatterns = [
 ```
 
 
-<br>
-<br>
+<br><br>
 
 
  # TEMPLATES İŞLEMLERİ(APP)
 
-- eklediğin uygulamanin içine **templates** adinda bir klasör olustur bu dosya özel bir klasör adıdır. root projedeki settings dosyasindaki tamplates listesine  bakarsan orda eklediğin tüm uygulamalarda bu dosya adini aradiğini göreceksin. bunu eklediğimiz uygulama içerisinde yapıyoruz
+- Eklediğin uygulamanin içine **templates** adinda bir klasör olustur bu dosya özel bir klasör adıdır. **Root projedeki settings dosyasindaki tamplates listesine**  bakarsan orda eklediğin tüm uygulamalarda bu dosya adini aradiğini göreceksin. Bunu eklediğimiz uygulama içerisinde yapıyoruz.
 
-- views dosyasinda yazdiğimiz fonksiyonlarda özel bir metod kullandik **render metodu**.  render metodu araciliği ile bir kaynağı kullanıcıya  gönderebiliriz. render in ilk parametresi **request** ( yani gelen istek) sonra ilgili uygulama içerisinde templates dosyasinda dosya adi arar bu dosya adi **index.html** olsun
+- Views dosyasinda yazdiğimiz fonksiyonlarda özel bir metod kullandik **render metodu**. Render metodu araciliği ile bir kaynağı kullanıcıya  gönderebiliriz. Render in ilk parametresini **request** ( yani gelen istek) olarak belirleriz sonra ilgili uygulama içerisinde templates dosyasinin dosya adını belirtiriz. Bu dosya adi **index.html** olabilir.
 
 
 <br>
@@ -140,7 +136,7 @@ urlpatterns = [
 ```
 <br>
 
-- ancak bu metod tüm uygulamalarin içerisindeki templates klasörünün içindeki index.html i arar . **eğer başka bir uygulamada da index.html varsa kodlar çakisacaktir**. bunun önüne geçmek için **tamplates klasörünün altina ilgili uygulamanin adinda bir klasör daha ekleyelim** ve şablon dosyalarimiz bunun içinde dursun bunu views dosyasinda render metodu ile çağirdiğimizda ise şöyle yazmamiz gerkir
+- Ancak bu metod **tüm uygulamalarin** içerisindeki **templates klasörünün içindeki index.html' i arar** . **Eğer başka bir uygulamada da index.html varsa kodlar çakisacaktir**. Bunun önüne geçmek için **tamplates klasörünün altina ilgili uygulamanin adinda bir klasör daha ekleyelim** ve şablon dosyalarimiz bunun içinde dursun bunu views dosyasinda render metodu ile çağırdığımızda ise şöyle yazmamiz gerkir.
 
 <br>
 
@@ -151,6 +147,8 @@ urlpatterns = [
 
 <br><br>
 
+
+# *DÜZENLEME* 
 
 # STATİCK FİLES (APP)
 
