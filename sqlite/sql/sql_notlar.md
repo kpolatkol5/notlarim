@@ -48,3 +48,6 @@
 - Verileri tabnında verileri tablolar halinde tutarız. Örneğin ürünler , şehirler , müşteriler gibi. Tekrar eden verileri tekilleştirmek amacı ile yapılandırılan veritabanı sistemlerine verilen isimdir. İlişkisel veritabanı teknolojisi, yapılandırılmış bilgilere en verimli ve esnek şekilde erişme olanağını sağlar.
 
 <br><hr><br>
+
+
+### NOT: DEVAMI EKLENECEK
