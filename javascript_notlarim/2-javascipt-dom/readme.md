@@ -205,3 +205,124 @@ function ornek() {
 ```
 
 <br><hr>
+
+
+## ***createELement() :***
+
+<br> 
+
+Belge içeriisnde html elementi oluşturmak için kullanılır. html node objesi geriye döndürür.
+
+<br>
+
+- ***createTextNode()  :*** createElement() ile oluşturulan elemanına metin eklemek için kullanılır. Oluşturulan metni geriye döndürür.
+
+- ***appendChild() :*** Oluşturulan düğümü herhangi bir html elemanına eklemek için kullanılır.Elemanı en sonra ekler.
+
+
+<br>
+
+```js
+var result  =   document.createElement("P");
+var text    = document.createTextNode("Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus illo,");
+
+result.appendChild(text);
+
+document.body.appendChild(result);// body etiketine oluşturduğumuz elementi ekleriz
+console.log(result);
+```
+
+
+
+<br><hr>
+
+
+## ***createComment() :***
+
+<br> 
+
+Belge içerine açıklama (yorum satırı oluşturur) oluşturtur.
+
+<br>
+
+JAVASCİPT
+```js
+var comment_text    =   "Javascipt ile oluşturuldu";
+var comment         =   document.createComment(comment_text);
+
+var ekle            =   document.body.appendChild(comment);
+
+console.log(ekle)
+```
+
+<br><hr>
+
+
+## ***addEventListener() :***
+
+<br> 
+
+Belgeye event (olay) işaretleyicisi eklemek için kullanılır.Eğer ilgili olay gerçekleştirilirse tanımlanan fonksiyonlar çalışır.
+
+
+<br>
+
+
+HTML
+```html
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo reiciendis doloremque porro sed illo id tenetur soluta deserunt possimus a animi excepturi vel esse placeat aliquid quis, debitis aperiam in.</p>
+
+<button id="buton1">Tıkla</button>
+```
+
+
+JAVASCİPT
+```js
+var buton_element   =   document.getElementById("buton1");
+
+document.addEventListener("click", function () {
+    let element     =   document.getElementsByTagName("p")[0];
+
+    element.innerHTML="Tıklandı"
+  })
+
+```
+
+<br><hr>
+
+
+
+## ***removeEventListener() :***
+
+<br> 
+
+Belgeye event (olay) işaretleyicisini silmek için kullanılır.
+
+
+<br>
+
+
+HTML
+```html
+<button id="buton1">Tıkla</button>
+```
+
+
+JAVASCİPT
+```js
+var button  =   document.getElementById("buton1");
+
+document.addEventListener("click" ,yazdir);
+
+function yazdir () {
+      alert("tıklama olayı gerçekleşti");
+  }
+
+button.addEventListener("click" , function(){
+    document.removeEventListener("click",yazdir);
+    console.log("event silindi");
+})
+
+```
+
+<br><hr>
