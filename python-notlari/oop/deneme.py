@@ -1,47 +1,82 @@
+
+data = [
+    {
+        "marka":"toyota",
+        "renk":"beyaz",
+        "fiyat":100000,
+        "model":2002
+    },
+        {
+        "marka":"mercedes",
+        "renk":"beyaz",
+        "fiyat":130000,
+        "model":2008
+    },
+        {
+        "marka":"bmw",
+        "renk":"lacivert",
+        "fiyat":180000,
+        "model":2008
+    },
+        {
+        "marka":"mazda",
+        "renk":"kırmızı",
+        "fiyat":150000,
+        "model":2017
+    },
+        {
+        "marka":"ford",
+        "renk":"gri",
+        "fiyat":300000,
+        "model":2022
+    },
+        {
+        "marka":"volkswagen ",
+        "renk":"beyaz",
+        "fiyat":280000,
+        "model":2019
+    },
+]
+
+
 class Arabalar():
-
-    toplam_arac =   []
-
-    def __init__(self ,aracin_markasi, renk , fiyat):
-
-        self.aracin_markasi       =   aracin_markasi       
-        self.renk                 =   renk     
-        self.fiyat                =   fiyat        
-        self.toplam_arac          =   []
-        # print(self.aracin_markasi,self.renk , self.fiyat)
-
-        Arabalar.toplam_arac.append(self.aracin_markasi)
+    vergi_orani =   4.5
+    zam_orani   =   1.5
 
 
-araba1  =   Arabalar(aracin_markasi="mazda", renk = "kırmızı", fiyat = 120000)
-araba2  =   Arabalar(aracin_markasi="toyota", renk = "mavi", fiyat = 100000)
+    def __init__(self, marka , renk , fiyat , model):
+        self.marka  =   marka
+        self.renk   =   renk
+        self.fiyat  =   fiyat
+        self.model  =   model
+
+    def zam_uygula(self):
+
+        return self.fiyat * Arabalar.zam_orani
 
 
-print(araba1.toplam_arac)
-print(araba2.toplam_arac)
-# ilk başta örnek niteliklerindeki toplam arac listesi boş
+    def vergi_uygula(self):
+
+        return  self.zam_uygula() * Arabalar.vergi_orani
+
+    @classmethod
+    def vergi_orani_guncelle(cls , yeni_oran):
+        cls.vergi_orani = yeni_oran
 
 
-araba1.toplam_arac.append("araba1 nesnesinden eklendi")
-#daha sonra sadece araba1 nesnesindeki toplam arac listesine değer eklendi
+    @classmethod
+    def toplu_arac_ekle(cls ,data):
+        eklenen_veriler = []
 
-print(f"araba1 nesnesindeki toplam arac listesi: {araba1.toplam_arac}")
-print(f"araba2 nesnesindeki toplam arac listesi: {araba2.toplam_arac}")
-# sadece araba1 e eklenen değer araba 2 nesnesine eklenmediğini sadece araba1 
-# e özel olduğunu görebilirsiniz
+        for i in data:
+           eklenen_veriler.append(cls(i["marka"], i["renk"], i["fiyat"], i["model"]))
 
+        return eklenen_veriler
 
+    @staticmethod
+    def kok_al(deger):
 
-print(f"sınıf nitliğindeki toplam arac listesindeki değerler : {Arabalar.toplam_arac} ")
-
-
-
-
+        return deger ** 0.5
 
 
-
-
-
-# print(f"Objeler üzerinden ulaşmaya çalışmak: {araba1.toplam_arac}")
-# print(f"Objeler üzerinden ulaşmaya çalışmak: {araba2.toplam_arac}")
-# print(f"Sınıf üzerinden sınıf niteliklerine: {Arabalar.toplam_arac}")
+print(Arabalar.kok_al(144))
