@@ -9,7 +9,7 @@ Property benzeyicisinin yaptığı en temel iş bir metodu nitelik gibi kullanab
 ```py
 class Arabalar():
 
-    def __init__(self, marka , renk , fiyat , model):
+    def __init__(self, marka , renk , fiyat , model , yil):
         self.marka      =   marka
         self.renk       =   renk
         self.fiyat      =   fiyat
