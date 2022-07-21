@@ -116,3 +116,91 @@ Bir yandan, komut git add, Hazırlama Alanına önceden eklediğiniz değişikli
 ### ***REBASE :***
 
 - bir projede branch oluşturduğumzda oluşturduğumuz branchda da master(ana branch) da commitler olabilir ve biz kendi branchımıza da masterdaki commitleri almak istiyor olabiliriz. direkt ***git merge master_branch*** yaparak da ana branchdan commitleri alabilriz bunun için bir kez daha commit eklememiz gerekir. Başka bir yöntem ise ***git rebase*** bunda ise yine aynı işlemi yapar masterdaki commitleri alır ancak logları değiştirerek masterdaki commitleri ayrı eklediğimiz branchdaki commitleri ayrı sıralar bu noktada rebase yapacaksak bu branch i paylaşmamamız gerekir çünkü loglar değişecektir bizim branchimizi paylaşan arkdaslarımızın dosyaları bozulabilir. hem logları temizlemek hem de tarihi tekrar ayarlamak için kullanılabilir.
+
+
+# GİT SSH TANIMLAMAK 
+
+Git bash açın ve aşağıdaki kodları yapıştırın.
+
+
+<br>
+
+```
+ssh-keygen -t rsa -b 4096 -C "github_email_adresi@.com"
+```
+
+<br>
+
+Tırnaklar arasına github da kayıtlı olan gmail adresini yazın
+ 
+
+<br>
+
+Daha sonra karşımıza çıkan ilk alanı boş geçelim. Bu alanda dosya adını tanımlamamız gerekiyor ancak kendimiz tanımlamasak varsayılan olarak oluşturulacaktır. Eğer kendiniz dosya adı tanımlarsanız geriye kalan kısımda hata alabilirsiniz.
+
+<br>
+
+Dosyalarımızı gönderip alırken kullanacağımız bir şifre ve bu şifrenin tekrarını giriyoruz
+
+<br>
+
+```
+eval $(ssh-agent -s)
+```
+
+<br>
+
+```
+ssh-add ~/.ssh/id_rsa
+```
+
+<br>
+
+![image](assets/img/ssh-code-min.PNG)
+
+<br>
+
+
+Belirlediğimiz şifreyi tekrar giriyoruz ve işlem bu kadar. Dosyanın oluşturulduğu kısım
+
+![image](assets/img/ssh-git-min.PNG)
+
+<br>
+
+.ssh dosyasının içerisine giriyoruz
+
+<br>
+
+![image](assets/img/ssh-anahtar-min.PNG)
+
+<br>
+
+işaretlenen alan şifremizin olduğu kısım. Dilerseniz bu dosyayı kod editörünüze sürükleyip içerisindeki şifreyi kopyalayın. Daha sonra ise github adresinize gidin.
+
+<br>
+
+![image](assets/img/github-ayarlar-min.PNG)
+
+
+<br>
+
+Github hesabınıza girdikten sonra ayarlar kısmına gidin .
+
+
+<br>
+
+![image](assets/img/ggithub-ssh-min.PNG)
+
+
+<br>
+
+yukarıda gösterilen kısıma gittikten sonra yeni ekle butonuna basın karşınıza aşağıdaki gibi bir alan gelecektir.
+
+<br>
+
+![image](assets/img/ssh-github-ekle-min.PNG)
+
+
+<br>
+
+Kopyaladığınız şifreyi alt kutucuğa yapıştrın ve başlık kısmına da istediğiniz bir şeyi yazın. ssh  ekleme işlemi bu kadardı
