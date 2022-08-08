@@ -117,6 +117,39 @@ Bir yandan, komut git add, Hazırlama Alanına önceden eklediğiniz değişikli
 
 - bir projede branch oluşturduğumzda oluşturduğumuz branchda da master(ana branch) da commitler olabilir ve biz kendi branchımıza da masterdaki commitleri almak istiyor olabiliriz. direkt ***git merge master_branch*** yaparak da ana branchdan commitleri alabilriz bunun için bir kez daha commit eklememiz gerekir. Başka bir yöntem ise ***git rebase*** bunda ise yine aynı işlemi yapar masterdaki commitleri alır ancak logları değiştirerek masterdaki commitleri ayrı eklediğimiz branchdaki commitleri ayrı sıralar bu noktada rebase yapacaksak bu branch i paylaşmamamız gerekir çünkü loglar değişecektir bizim branchimizi paylaşan arkdaslarımızın dosyaları bozulabilir. hem logları temizlemek hem de tarihi tekrar ayarlamak için kullanılabilir.
 
+<br>
+
+
+# ignore dosyası 
+
+<br>
+
+çalışma alanına .gitignore adında bir klasör oluştur. Bu dosyaya git de takip edilmesini istemediğin dosya veya dizinleri ekleyebilirsin. 
+
+- *.png Tüm png uzantılı dosyaları ekler
+- bir klasörü eklemek istersen dosya_adi/ ters taksim işareti koymalısın
+- eğer dosyaları hazırladıktan veya commit işlemi yaptıktan sonra ignore dosyası eklesen çalışmayacaktır. BUnun için 
+
+<br>
+
+```bash
+git rm --cached  deneme.txt
+```
+
+<br>
+
+bu şekilde ilgili dosyanın takibini kaldırarak ignore dosyasına ekleyebilmemizi sağlar. Eğer eklemek istediğin bir dosya değilde dizin ise ilgili dizinin takibini kaldırabilirsin 
+
+<br>
+
+
+```bash
+git rm --cached -r  deneme/dizin/
+```
+
+<br>
+
+
 
 # GİT SSH TANIMLAMAK 
 
