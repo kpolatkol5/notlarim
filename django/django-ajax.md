@@ -31,3 +31,13 @@ element.addEventListener("keypress", function(event) {
 <br> 
 
 djangoda post isteği ile csrf token i de göndermek gerekiyor . Ajax isteği yapıyoruz yukarıdaki kod ile datayı headers da eklediğimiz csrf token ile gönderdiğimizde istek başarılı olacaktır
+
+
+<br>
+
+```py
+    if request.method == "POST":
+        if request.is_ajax():
+            print(request.POST)
+            print("ajax")
+```
