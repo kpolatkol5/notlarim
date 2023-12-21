@@ -1,8 +1,8 @@
 ## ***.array() :***
  
-Verilen bir pythonthon listesini numpy dizisine dönüştürür.
+Verilen bir python listesini numpy dizisine dönüştürür.
 
-```pythonthon
+```python
 import numpy as np
 
 print(np.array([1,2,3,4,5,6]))
@@ -189,7 +189,7 @@ print(result2[3:]) #üçüncü index ile geriye kalan tüm listeyi alırız
 print(result2[::-1]) # listeyi tesine döndürür ve geriye döndürür
 ```
 
-Elimizde çok boyutlu bir pythonthon listesi olduğunu varsayalım. Bu listeyi numpy dizisine dönüştürelim veya herhangi bir numpy dizisi olsun fark etmez dizi içerisindeki elemanlara nasıl ulaşacağız örnekle açıklayalım.
+Elimizde çok boyutlu bir python listesi olduğunu varsayalım. Bu listeyi numpy dizisine dönüştürelim veya herhangi bir numpy dizisi olsun fark etmez dizi içerisindeki elemanlara nasıl ulaşacağız örnekle açıklayalım.
 
 ```python
 import numpy as np
@@ -216,7 +216,7 @@ print(numpy_listesi[2,2])
 # 78
 ```
 
-Aralarına virgül koyarak sanki birer listeymiş gibi ekliyoruz pythonthon listesinden farkı ise her bir liste için bir köşeli parantez kullanmıyoruz direkt virgülle istediğimiz değere gelene kadar yazıyoruz.
+Aralarına virgül koyarak sanki birer listeymiş gibi ekliyoruz python listesinden farkı ise her bir liste için bir köşeli parantez kullanmıyoruz direkt virgülle istediğimiz değere gelene kadar yazıyoruz.
 
 Eğer bir bir numpy dizinde çok boyutlu dizilerden her listeden belirli elemanları seçmek istersek 
 
