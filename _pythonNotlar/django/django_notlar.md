@@ -1,27 +1,20 @@
 # DJANGO KURULUMU
 
 - django-admin startproject proje_adi
-- python manage.py runserver : ilk kurulum ve sql dosyasinin oluşturulmasi için
-- python manage.py migrate :veritabani kurulumu için gereklidir
-- python manage.py createsuperuser
-
-- python manage.py startapp uygulamaadi
-
+- python manage.python runserver : ilk kurulum ve sql dosyasinin oluşturulmasi için
+- python manage.python migrate :veritabani kurulumu için gereklidir
+- python manage.python createsuperuser
+- python manage.python startapp uygulamaadi
 - eklediğin uygulamayi root projede settings dosyasina ekle virgükl koymayi unutma
-  
-<br><hr>
 
 ## EKLEDİĞİN UYGULAMA İÇİNDE URL YAPISI OLUŞTUR
 
 - **path()** i ve views dosyasını import edelim 
 
-<br>
-
 ```python
     from django.urls import path
     from . import views 
 ```
-<br>
 
 ```python
     urlpatterns = [
@@ -29,18 +22,10 @@
         path("sozluk" ,views.sozluk , name=" sozluk"),
     ]
 ```
-<br>
 
-- Ekldeiğimiz **urls** dosyasinadaki urls listesine **path** tanimladik şimdi burdaki path in içindeki "" içine yazdığımız deger arama motorundaki **uzanti adi** oluyor peki bu uzantiyi nerden nasil alacak? Onu da yanda belirttiğimiz views dosyasındaki fonksiyonda tanımlayacağız. Views dosyasina da bir fonksiyon tanimladik **views.fonksiyon_adi** ile hangi fonksiyonu görüntülemek istersek onun adini yanda belirtiyoruz. Yukarıda tanımladığımız import işlemlerinde views dosyasını da import etmiş olduk **from . import views**  bu şekilde **urls.py** dosyasina views dosyasini import ediyoruz bu kod views dosyasindaki tüm foksiyonlari import edecektir
-
-
-<br>
-
-
+- Ekldeiğimiz **urls** dosyasinadaki urls listesine **path** tanimladik şimdi burdaki path in içindeki "" içine yazdığımız deger arama motorundaki **uzanti adi** oluyor peki bu uzantiyi nerden nasil alacak? Onu da yanda belirttiğimiz views dosyasındaki fonksiyonda tanımlayacağız. Views dosyasina da bir fonksiyon tanimladik **views.fonksiyon_adi** ile hangi fonksiyonu görüntülemek istersek onun adini yanda belirtiyoruz. Yukarıda tanımladığımız import işlemlerinde views dosyasını da import etmiş olduk **from . import views**  bu şekilde **urls.python** dosyasina views dosyasini import ediyoruz bu kod views dosyasindaki tüm foksiyonlari import edecektir
 
 - Peki views dosyasina nasil  fonksiyon tanimlanir?
-<br>
-
 
 ```python 
     def index(request):
@@ -48,30 +33,18 @@
          # buradaki fonksiyon adlari ile urls dosyasindan birer path oluşturuyoruz şimdilik HttpResponse gönderelim daha sonra render methodu ile template göndereceğiz
 ```
 
-<br>
-
--  Şimdi biz buraya kadar eklediğimiz uygulamadaki url yapisi ve gereken fonksiyonlari tanimladik. Artık kurduğumuz uygulama içerisinde tanımladığımız urls dosyasını  root projeye **import etmemiz** gerekiyor. Bunun için root projedeki **urls.py** dosyasina gidiyoruz.
-
-<br>
-
+-  Şimdi biz buraya kadar eklediğimiz uygulamadaki url yapisi ve gereken fonksiyonlari tanimladik. Artık kurduğumuz uygulama içerisinde tanımladığımız urls dosyasını  root projeye **import etmemiz** gerekiyor. Bunun için root projedeki **urls.python** dosyasina gidiyoruz.
 
 ### SIRASIYLA
-<br>
 
 1. ilk başta include import etmemiz gerekiyor path in yanina hemen **, koyup import** yaziyoruz bu import bize farkli uygulamada oluşturdugumuz url yapilarini ana  projedeki urls dosyasına  eklememizi sağlar.
-
-<br>
 
 ```python
     from django.contrib import admin
     from django.urls import path,include
 ```
-<br>
 
 2. sonraki adimda ise urlpatterns listesine , koyup yeni bir path tanimliyoruz
-
-
-<br>
 
 ```python
 urlpatterns = [
@@ -79,12 +52,8 @@ urlpatterns = [
     path("", include("genelsayfalar.urls")),
 ]
 ```
-<br>
-
-
-### NOT :
+### NOT 
 - Eğer root projedeki urls yapisindaki path e bir değer girersen uygulamada oluşturduğun uzantilar girdiğin degerin alt uznatilari olacaktir mesela
-
 
 ```python
 # eklediğimiz uygulamadaki urls
@@ -95,7 +64,6 @@ urlpatterns = [
 
 
 ```
-
 
 ```python
 # root projedeki urls
@@ -116,65 +84,37 @@ urlpatterns = [
 
 ```
 
-
-<br><br>
-
-
  # TEMPLATES İŞLEMLERİ(APP)
 
 - Eklediğin uygulamanin içine **templates** adinda bir klasör olustur bu dosya özel bir klasör adıdır. **Root projedeki settings dosyasindaki tamplates listesine**  bakarsan orda eklediğin tüm uygulamalarda bu dosya adini aradiğini göreceksin. Bunu eklediğimiz uygulama içerisinde yapıyoruz.
 
 - Views dosyasinda yazdiğimiz fonksiyonlarda özel bir metod kullandik **render metodu**. Render metodu araciliği ile bir kaynağı kullanıcıya  gönderebiliriz. Render in ilk parametresini **request** ( yani gelen istek) olarak belirleriz sonra ilgili uygulama içerisinde templates dosyasinin dosya adını belirtiriz. Bu dosya adi **index.html** olabilir.
 
-
-<br>
-
-
 ```python
     def index(request):
         return render(request, "index.html")
 ```
-<br>
 
 - Ancak bu metod **tüm uygulamalarin** içerisindeki **templates klasörünün içindeki index.html' i arar** . **Eğer başka bir uygulamada da index.html varsa kodlar çakisacaktir**. Bunun önüne geçmek için **tamplates klasörünün altina ilgili uygulamanin adinda bir klasör daha ekleyelim** ve şablon dosyalarimiz bunun içinde dursun bunu views dosyasinda render metodu ile çağırdığımızda ise şöyle yazmamiz gerkir.
-
-<br>
-
 ```python
     def index(request):
         return render(request, "uygulama_adi/index.html")
 ```
-
-<br><br>
-
-
 # *DÜZENLEME* 
 
 # STATİCK FİLES (APP)
 
 - static dsyaları ile çalışırken uygulama içinde  bir **static** dosyası oluşturman gerekiyor. css js ve img dosyalarını burda barındıracaksın bu dosyaları eklerken  de {% static '' %} içerisine tırnaklar arasına static dosyalarının adını yazıyosun ancak bunun çalışması için her şablonun üstüne {% load static %} yazman gerek bu static dosyalarını çalıştırğın ortama aktarmaya yarar
 
-<br>
-
-
-
 ```django
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
 ```
 
-<br>
-
 - **projelerimizde birden fazla uygulama olacaktır** bunun için uygulamaya özel olan css ,js veya img dosyalarını  static **klasörünün içine çalıştığın uygulama adında bir klasör oluşturup bu uygulamaya özel olan dosyaları klasöre atarız** bu şekilde başka bir uygulamada da aynı isimde başka **bir dosya varsa karışmayacaktır.**
-
-
-
 # BASE TEMPLATES & BASE STATİC
 
 - html iskeleti ve ortak olan kod parcalarini ve içeriklerini tek bir yerden yönetebiliriz. bunun için root dosya izinine tamplates diye bir dosya ekliyoruz ancak django bu templates dosyasini taramaz taranan templates dosyalari uygulamalarin içindeki templates dosyalariydi. bu klasöründe taranmasi için  root projedeki settings dosyasina gideriz ve DIRS:[] listesinin içine BASEDIR / "templates" yazmamiz gerekiyor
-
-<br>
-
 
 ```python
 TEMPLATES = [
@@ -195,7 +135,6 @@ TEMPLATES = [
     },
 ]
 ```
-<br>
 
 - root projedeki templates klasöründeki base.html sayfasina tüm sayfalarda ortak olan kodlari yaziyoruz mesala html iskeleti ve menü kısmı falan
 
@@ -206,37 +145,26 @@ TEMPLATES = [
 ```django
     {% block block_name %}{% endblock block_name %}
 ```
-<br>
 
 - bu base.html kısmında görünen kısım block etiketine bir isim verdik bu isime sahip olan index.html deki block kısmındaki farklılıklar dikkate alınarak görüntülenecektir
 
 - şimdi biz block kısmıda gereken tanımlamalar yaptık ancak bu index.html ile base.html i birbirine bağlamamız gerekir. bunun için ise index.html in en üstüne  aşağıdaki kodu yazarız
-<br>
 
 ```django
    {% extends 'base.html' %} 
+
 ```
-<br>
 
 - extends tanımlaması ile base.html e göndermiş oluyoruz bunu ara sayfalara yapıyoruz mesela hakkımızda sayfası gibi base html de açtığımız alanlar(block alanlar) hakkımızda sayfasındaki tanımladığımız **aynı isimdeki block** alanları orayı dolduracaktır bu sayede hangi sayfada çalışırsak çalışalım base html deki boş block alanarını  doldurarak sayfaları daha dinamik hale getiriyoruz 
-
-
 
 - peki biz root projedeki templates dosyasina uygulamadaki index.html i nasıl extends ediyoruz ?
 
 ### ŞÖYLEKİ ;
 
 - biz root projede settings dosyasinda root projedeki templates yolunu belirmiştik şimdi biz extends ettiğimizde django genel olarak **templates klasörü altında base.html** i arar biz bu settings dosyasindaki tanımlamamız ile bunun görünmesini sağlamış olduk  eger biz farklı bir uygulama oluştursaydık bile root projedeki **base.html** deki kodlar görünecekti 
-
-<br>
-<br>
-
-
 ## BASE STATİC
 
-
 - şimdiye kadarki kısım uygulamaların içerisindeki static dosyalarıydı . uygulamaya özel yazdığımız css js ve img dosyalarını burada static klasörü  altında eklemiştik birden fazla uygulama olduğuna karışmaması için  çalıştığımız uygulama adında bir klaör oluşturup dosyalarımızı içine attık çünkü varsayılan olarak static dosyası tüm uygulamalrda aranır eğer biz tüm uygulamalarda da geçerli olan css js veya img dosyaları varsa root dizinde bir static dosyası oluşturuyoruz ve bunu root projedeki settings dosyasında en alta yolunu  eklememiz gerekiyor  
-
 
 ```python  
     STATICFILES_DIRS=[
@@ -246,13 +174,9 @@ TEMPLATES = [
 
 - şeklinde tanımlama yaparak root projeye static dosyalarını eklemis olduk . burada kafan karışabilir şimdi biz uygulama düzeyinde de static belirledik root projede de static bunlar karışmayacak mı?
 
-
 -  1.  django genel olarak static dosyalarını arar şimdi biz uygulama düzeyinde static klasörü açtık ve bu uygulama ile aynı isimde bir klasör daha açtık ve içine style dosyalarını attık bunu çağırırken  **uygulama_adi/css/style.css** olarak çağırıyoruz ama bir de root projede tüm uygulamalarda ortak olan css dosyaları var bunda da dosyalrı direkt css js img diye oluşturuyoruz şablonda çağırırken de bir uygulama adındaki dosyanın altından çağırmayacağımız için sorun olmayacaktır direkt çağırırken css/style.css şeklinde çağıracaz burdaki amaç uygulama düzeyinde bakımı kolaylaştırmaktır. uygulamayı geliştirirken daha az kodla ilgileneceğiz
 
 - uygulamaya özel bir css yazdığımızı varsayalım ve base.html den ayrı olarak index.html yazdık ve base.html e extend ettik burda index.html e özel olarak yazdığımız css in çalışabilmesi için base.html de **{% block css_files %}{% endblock content %}** şeklidne bir alan açmamız gerekiyor (head etiketleri altına normal css dosyalarını çağırdığımız yere ) ve index.html de de bu alanı dolduracak 
-
-<br>
-
 
 ```django
     {% block css_files %} 
@@ -260,78 +184,44 @@ TEMPLATES = [
     {% endblock content %} 
 ```
 
-<br>
-
 - şimdi biz bunu index.html de doldurduğumuzda base.html deki **{% block css_files %}**  bölümüne gelecek eğer başka bir sayfa olsun mesela hakkimizda.html buraya da  aşağıdaki gibi tanımlarsak base.html de alanı doldurmuş oluyoruz
-
-<br>
-
 
 ```django
     {% block css_files %} 
         <link rel="stylesheet" href="{% static 'blog/css/hakkimda.css' %}">
     {% endblock content %} 
 ```
-
-<br>
-
 # BOOTSTRAP DOSYASINI PROJEYE EKLEME
 
 - ilk başta bootstrap js ve css dosyalarını root projedeki static dosyasına ekleriz çünkü bootstrap **bize her sayfada lazım olacaktır**
 
 - base static de birer tane custom css ve js dosyalarını ekleyip base.html de çağırıyoruz bu tüm sayfalarda ortak olacak olan dosyalar
 uygulamaya özel css dosyalarını çağırırken mesela index.html için ayrı bir css yazdın önce base.html de head etiketlerine bunu block etiketleri altında çağırıyoruz yukarıda anlatılan gibi js dosyaları da buna dahil ancak bunu biz en altta çağırırız js dosyaları altta çağırılır çünkü
-
-<br>
-
-
 # KISMİ ŞABLONLAR (PARTİALS)
 
 - tasarımı tek bir sayfada oluşturmak yerine **parcalara ayırarak oluşturmaya** çalışıyoruz 
-
 - mesela navbar tüm uygulamaların ieçrisinde olması gereken bir parça bunu **base template içerisinde** (tüm sayfalara ortak olan template klasörü) **partial** diye bir klasör oluşturup **_navbar.html** şeklinde ekleriz.
-
 - sonra bu parcayı base.html içerisinde çağırmamız gerekiyor 
-
-<br>
 
 ```django
     {% include 'partials/_navbar.html' %} 
 ```
-<br>
-
 # KISMİ ŞABLONLAR (APPS)
 
 - eger uygulama içerisinde partials oluşturacaksan oluşturduğun tamplates dosyasından itibaren kaç dosyanın kökdizinindeyse hepsini belirtmen gerekiyor mesela uygulamanın templates dosyasından itibaren ;
 
-<br>
-
-
 ```django 
 {% include 'genelsayfalar/ana_sayfa/partials/_manset.html' %}
 ```
-<br>
 
 - yukarıdaki gibi belirmemiz gerekiyor genel sayfaların bir üst klasörü templates klasörüdür
-
-
-
-
 # LİNK EKLEME
 
-- yaptığımız uygulamanın içine urls.py dosyası açmıştık path de belirlediğimiz url yapısına biz **isim** veriyoruz  (name) bu isime göre de dinamik olarak link ekliyoruz link ekleyeceğimiz kod ise  {% url 'link_adi' %} olacak şekilde ekleyebiliyoruz
-<br>
+- yaptığımız uygulamanın içine urls.python dosyası açmıştık path de belirlediğimiz url yapısına biz **isim** veriyoruz  (name) bu isime göre de dinamik olarak link ekliyoruz link ekleyeceğimiz kod ise  {% url 'link_adi' %} olacak şekilde ekleyebiliyoruz
 
 ```django
     {% url 'link_adi' %}
 ```
-
-<br>
-
-# DİNAMİK VERİ İLE ÇALIŞMAK
-
-- gelecek
-
 
 # MODEL OLUŞTURMAK
 
@@ -347,24 +237,11 @@ class Blog(models.Model):
 
 ```
 
-<br>
-
-- yukarıdaki örnekte blog uygulamasının içindeki model.py dosyasına sınıf tanımladık . burda paylaşacağımız blogların açıklama bilgisi başlık bilgisi resim bilgisi aktif veya pasif bilgisini tutan veriler ekledik bu verilerde her değişiklik yaptığımızda migrate işlemi yapmalıyız burda eklediğimiz özellikler admin panelde görünecektir   
-
-<br>
-
-
-# YAZAR BLOG İLİŞKİSİü
-
-<br>
-
-- yazılan makale veya postların kime ait olduğunu belirtmek için models.py dosyasında oluşturduğumuz sınıfa yazar alanı ekleyeceğiz
-
+- yukarıdaki örnekte blog uygulamasının içindeki model.python dosyasına sınıf tanımladık . burda paylaşacağımız blogların açıklama bilgisi başlık bilgisi resim bilgisi aktif veya pasif bilgisini tutan veriler ekledik bu verilerde her değişiklik yaptığımızda migrate işlemi yapmalıyız burda eklediğimiz özellikler admin panelde görünecektir   
+# YAZAR BLOG İLİŞKİSİ
+- yazılan makale veya postların kime ait olduğunu belirtmek için models.python dosyasında oluşturduğumuz sınıfa yazar alanı ekleyeceğiz
 -  her makalenin bir yazarı olacak ve her yazar birden fazla makale veya blog ekleyebilecek
-
 - bunun için bire bir ilişki tipini kullanacağız
-
-<br>
 
 ```python
     class Blog(models.Model):
@@ -376,7 +253,6 @@ class Blog(models.Model):
         yayimlanma_tarihi = models.DateTimeField()
         yazar = models.ForeignKey('auth.User')
 ```
-<br>
 
 - **models.ForeginKey('auth.User')** ile  kullanıcı modelini referans gösterdik artık yazar alanında  kullanıcılar görünecektir
 
@@ -387,49 +263,33 @@ class Blog(models.Model):
 ```
 - yukarıdaki tanımlamada models.set default tanımlaması ile eğer yazar silinirse yazdığı bloglar silinmesin diye varsayılan olarak 1 id sini sahip kullanıcıya aktarılacaktır
 
-
-
-
-<br>
-
-
-
 # DJANGO MİGRATİONS
 
-- models.py de yazdığın sınıflarla ilgili  veritabanında tabloları oluşturacak kodları yazar migrations klasorundeki _initial.py diye bir dosya gelecektir 
+- models.python de yazdığın sınıflarla ilgili  veritabanında tabloları oluşturacak kodları yazar migrations klasorundeki _initial.python diye bir dosya gelecektir 
 
 -  oluşturduğumuz migrationu uygulamak ve veritabanında görüntülemek için  migrate komutunu yazarız bu şekilde bekleyen migrateleri uygular
 
 ```python
->>> python manage.py makemigrations 
->>> python manage.py migrate
+>>> python manage.python makemigrations 
+>>> python manage.python migrate
 ```
-<br>
-
-
 # KAYIT EKLEMEK
-
 
 - ilk başta shell üzerinden birkaç kayıt eklememiz gerekiyor daha sonra bu kayıtları kullanarak admin uygulamasını düzenleyeceğiz
 
 - sehell e girmek için terminale aşağıdaki komutu yazarız
 
 ```python 
->>> python manage.py shell
+>>> python manage.python shell
 ```
 
-<br>
-
-- ilk başta models.py dosyasında oluşturuduğumuz ilgili sınıfı import etmek gerekiyor
-
+- ilk başta models.python dosyasında oluşturuduğumuz ilgili sınıfı import etmek gerekiyor
 
 ```python 
 >>> from genelsayfalar.models import Blog
 ```
-<br>
 
 - shell e blog sınıfını ekledik artık bu sınıftan obje üreteceğiz bu obje veritabanında kayıt olacaktır
-
 - obje oluşturuken ;
 
 ```python 
@@ -443,7 +303,6 @@ class Blog(models.Model):
 
 - bunların veritabanında kayıt edilebilmesi için ise aşağıdaki gibi tanımlama yapmamız gerekiyor
 
-
 ```python 
 
 >>> b1.save()
@@ -451,17 +310,12 @@ class Blog(models.Model):
 ```
 
 - eğer veritabanında kayıt olan title bilgisinin içeriğini görmek istersen 
-
-- models.py dosyasında tanımladığımız Sınıf a aşağıdaki tanımlamayı yapmalıyız 
-
-<br>
-
+- models.python dosyasında tanımladığımız Sınıf a aşağıdaki tanımlamayı yapmalıyız 
 
 ```python 
     def __str__(self):
         return self.title
 ```
-<br>
 
 - kayıt alma işleminde bir tane kayıt almak istersenn
 
@@ -470,9 +324,6 @@ class Blog(models.Model):
 ```
 
 - yukarıdaki işlemin açıklaması Blog sınıfından türetilen objelerden id si 1 olan objenin title bilgisini getir demektir
-
-
-
 - eğer Blog sınıfından türetilen objelerin hepsini almak istersen aşağıdaki tanımlamayı kullanırsın burdan gelen değer listedir indek numarasına göre elemanları alabilirsin ve içerisindeki bilgilere olaşabilirsin  
 
 ```python 
@@ -480,29 +331,16 @@ class Blog(models.Model):
 >>> Blog.objects.all().[1].title # 1. numaralı indexteki objenin title bilgisini verir 
 ```
 
-<br>
-
 - shell  den çıkış yapmak için terminal e  **exit()** yazılır. 
-
-
 # KAYITLARI LİSTELEME
 
-
-- kayıtları yukarıda olduğu gibi birkaç tanesini custom olarak ayarladık şimdi ise bu kayıtlari uygulamamızın içerisidneki views dosyasında çağırmamız gerekiyor çalıştığımız uygulamanın views dosyasına gidelim ve uygulamamızdaki models.py dosyasından ilgili sınııf import edelim
-
-<br>
-
+- kayıtları yukarıda olduğu gibi birkaç tanesini custom olarak ayarladık şimdi ise bu kayıtlari uygulamamızın içerisidneki views dosyasında çağırmamız gerekiyor çalıştığımız uygulamanın views dosyasına gidelim ve uygulamamızdaki models.python dosyasından ilgili sınııf import edelim
 
  ``` python 
     from calistiğin_uygulama_adi.models import Blog , Catagories
  ```
-
-<br>
-
+ 
 - hangi fonksiyonda işlem yapacaksan mesela ana sayfa olsun bu fonskiyonun içerisine sözlük yapısı oluşturuyoruz ve en son  render fonksiyonu ile bu sözlüğü sayfaya göndereceğiz
-
-
-<br>
 
 ``` python 
     def ana_sayfa(request):
@@ -512,15 +350,8 @@ class Blog(models.Model):
         return render(request , "genelsayfalar/ana_sayfa/anasayfa.html" ,context)
 ```
 
-<br>
-
 - blogs takma isimdir var olan objeleri tutar var olan objeler liste türündedir.
-
 - sonraki adımda ise sayfada objeden gelecek olan veriler mesela title alanı description alanı gibi alanları sayfada  doldurmamız gerekiyor ve her eklenen obje için bir html alanı tekrarlanır bu alanı döngüye almamız gerekiyor döngüye aldığımız bu alanın içerisidne de objelerden gelen title ve description verileri ile dolduracağız 
-
-<br>
-
-
 ### DJANGO HTML
 
 ```django
@@ -528,13 +359,8 @@ class Blog(models.Model):
         {% include 'genelsayfalar/ana_sayfa/partials/_genel_bloglar.html' %}   
     {% endfor %}   
 ```
-<br>
 
 - for döngüsü ile tekrarlanacak olan alan aşağıdaki gibidir 
-
-<br>
-
-
 ### DJANGO HTML
 
 ```django
@@ -601,29 +427,17 @@ class Blog(models.Model):
     </div>
 </div>   
 ```
-<br>
-
 
 - for döngüsündeki  **{% for genel_bloglar in blogs  %}** genel_bloglar kısmı takma addır yani index sayfasına gelen blogs yapısının içerisindeki her bir objenin yerini alır
-
 - döngüde tekrar eden kısımda resmi çağırıken bir filitre kullandık
-
-<br>
-
 
 ```django
     <img class="img-fluid" src="{% static 'genelsayfalar/img/'|add:genel_bloglar.image %}" alt="">
 ```
-<br>
 
 - bu filitre string birleştirmede kullanılır **|add:genel_bloglar.image** burda resim yolunu belirtirken veritabından gelen resim ismini yola eklemiş olduk kısacası resimlerin varsayılan olarak tutulduğu dosyadan veritabanındaki gelen resim ismine göre resimler yerleşecektir
 
 - veritabanından gelen diğer bilgiler mesela title veya description alanlarını ilgili yerlerde çağırıken **{{ }}** içerisinde belirtiriz for döngüsünde verdiğimiz takma ad burda genel_bloglar kısmı
-
-
-
-<br>
-
 
 ```django
     <div class="blog_text ps-2">
@@ -632,12 +446,7 @@ class Blog(models.Model):
         </span>
     </div>
 ```
-<br>
-
 ## VİEWS DOSYASINDA KULLANDIĞIMIZ FİLİTRELER
-
-<br>
-
 
 ``` python 
     def ana_sayfa(request):
@@ -646,8 +455,6 @@ class Blog(models.Model):
         }
         return render(request , "genelsayfalar/ana_sayfa/anasayfa.html" ,context)
 ```
-<br>
-
 
 - **Blog.objects.filter()**  buradaki Blog bizim çalıştığımız sınıfın adıdır burdaki objeleri filitrelemek istersek objects.filter(is_active=True , is_home=True) ile aktif olarak seçilen ve anasayfada göstermek istediklerini filitreleyip öyle göndeiriz
  
@@ -655,44 +462,23 @@ class Blog(models.Model):
 
 - **Sınıf_adı.objects.get()** ile sadece istenen bir kayıt gelir. bunu yaparken id ile çağırabilirsin
 
-
-<br>
-
-
 # ADMİN PANEL UYGULAMASI
 
-<br>
-
-- çalıştığımız  uygulamanın içerisindeki admin.py dosyasına gideriz ve yine aynı uygulama içerisindeki models dosyasınında tanımladığımız sınıfları çağırmamız gerekiyor
-
-<br>
-
+- çalıştığımız  uygulamanın içerisindeki admin.python dosyasına gideriz ve yine aynı uygulama içerisindeki models dosyasınında tanımladığımız sınıfları çağırmamız gerekiyor
 
 ```python
     from .models import Blog,Catagories
 ```
 
-<br>
- 
-- **" . "** kullanmamızın sebebi admin.py ile models.py dosyası aynı kökdizinde olmasıdır
-
-
+- **" . "** kullanmamızın sebebi admin.python ile models.python dosyası aynı kökdizinde olmasıdır
 - daha sonraki adımda ise bu sınıfları admin panele eklemeliyiz
   
-
-<br>
-
-
 ```python
     admin.site.register(Blog)
     admin.site.register(Catagories)
 ```
-
-<br>
  
-- admin panele eklediğin ve veritabanından gelen değerler uygulama_adi-object olarak görünür bunu düzeltmek için models.py dosyasına gideriz ve ilgili sinifa fonksiyon tanımlarız
-<br>
-
+- admin panele eklediğin ve veritabanından gelen değerler uygulama_adi-object olarak görünür bunu düzeltmek için models.python dosyasına gideriz ve ilgili sinifa fonksiyon tanımlarız
 
 ```python
     def __str__(self):
@@ -700,78 +486,46 @@ class Blog(models.Model):
     #(title yerine artık üretilen nesneden ne çağırmak istiyorsan onu yazarsın description gibi)
 ```
 
-<br>
-
-- eklediğin uygulama üzerinde  admin panelde çalışırken kontrol panelini özelleştirebilirsin  örneğin çalıştığın sınıftan "title" bilgisinin yanıda birkaç bilgi saha eklemek istiyosun mesela is_active veya is_home değerlerinin bilgilerini **bunun için admin.py dosyasında yeni bir sınıf oluştururuz** 
-
-<br>
+- eklediğin uygulama üzerinde  admin panelde çalışırken kontrol panelini özelleştirebilirsin  örneğin çalıştığın sınıftan "title" bilgisinin yanıda birkaç bilgi saha eklemek istiyosun mesela is_active veya is_home değerlerinin bilgilerini **bunun için admin.python dosyasında yeni bir sınıf oluştururuz** 
 
 ```python
     class Blog_Admin(admin.ModelAdmin):
         list_display = ("id" , "title", "is_active" , "is_home")
 ```
 
-<br>
-
-
 - sinifi yazdiktan sonra reqister ile parametre olarak göndermemiz gerekiyor
-
-<br>
 
 ```python
     admin.site.register(Blog, Blog_Admin)
     admin.site.register(Catagory)
 ```
 
-<br>
-
-
 ## ADMİN PANELİ ÖZELLEŞTİRİRKEN KULLANDIĞIMIZ BAĞZI ÖZELLİKLER
-<br>
 
-
-- yukarıdaki örnekte admin.py dosyasında  bir sınıf oluşturmuştuk bu sınıfta kullanılan bağzı filitreler
-
-<br>
-
+- yukarıdaki örnekte admin.python dosyasında  bir sınıf oluşturmuştuk bu sınıfta kullanılan bağzı filitreler
 - **list_display=("id" , "title" , "is_active")** : gibi veritabanından gelen objelerin isimlerini ve değerlerini admin panelde listeleyebilriz
-
 - **list_editable=("id" , "title" , "is_active")** : ise veritabanından gelen objeleri üzerine tıklamadan  düzenleyebiliyoruz.
-
 - **search_fields = ("title", "description")**  : kontrol paneline arama kutusu eklemek istersen kullanabilirsin
-
-- **readonly_fields = ("description",)** : sadece okunabilir olan ve düzenlenemez olan alanları eklemek istersen yine admin.py dosyasına eklediğin sınıfa eklersin
-
+- **readonly_fields = ("description",)** : sadece okunabilir olan ve düzenlenemez olan alanları eklemek istersen yine admin.python dosyasına eklediğin sınıfa eklersin
 - **list_display_links =("title , "description")** : kontrol panelinde üzerine tıklayıp da düzenleme alanına gideceğin kısımları belirlersin
-
-
-<br>
-
 ## ADMİN AKSİYON EKLEME VE ÖZELLEŞTİRME
-<br>
 
 - admin panelde varsayılan olarak silme eylemi gelmektedir 
 - görünen text aksiyonun kısa adı olarak geçer (short description)
 - işaretlediğimiz her veri querydir ve queryset olarak gitmektedir
-- bu işlemelri ilgili uygulamaın admin.py dosyasında oluşturduumuz ilgili modelin adminclassına  yazarız. 
-
+- bu işlemelri ilgili uygulamaın admin.python dosyasında oluşturduumuz ilgili modelin adminclassına  yazarız. 
 - ilgili sınıfa bir eylem fonksiyonumuzu yazarız mesela bu fonksiyon seçilen queryleri **is_active=True** olarak değiştirsin
 
-<br>
-
-```py
+```python
     def yayinla(self, request,queryset):
         count=queryset.update(is_active=True)
         self.message_user(request, "{} adet yazı yayına alındı".format(count))
             #format kısmında hata olabilir hatırlayamadım
 ```
-<br>
 
 - fonksiyonumuzu yazdıktan sonra sınıfta bunu çağırmamız gerekiyor
 
-<br>
-
-```py
+```python
     class Blog_Admin(admin.ModelAdmin):
         list_display = ("title" , "is_active" , "is_home" ,"yayimlanma_tarihi", "selected_categories")
         readonly_fields=("slug",)
@@ -780,53 +534,37 @@ class Blog(models.Model):
         actions=("yayinla",)
 ```
 
-<br>
-
 - eğer aksiyonun short name ine müdahale edip adını değiştirmek istersen de
 
-```py
+```python
     yayinla.short_description="işaretlenen yazıları yayına al"
 ```
-<br>
 
 - **date_hierarchy** kavramı hangi zamana göre hiyerarşi uygulamak istersen onu paremetre olarak vermemiz gerekiyor
-
 - ay ve gün verilerine göre bir yapı oluşturur
 
-
-```py
+```python
     date_hierarchy=("yayimlanma_tarihi",)
 ```
 
-<hr><br>
-
-
-
 ## FORM FİELDSLERİ ÖZELLEŞTİRME VE FİELDS KÜMELERİ
-
-<br>
 
 - fieldslerin sıralamasını değiştirebilirsin
 
-```py
+```python
     fields=("başlık" , "slug" , "içerik" , "aktif" )
 ```
 - yukarıdaki her bir eleman bir satırı temsil eder eğer birtakım öğreleri yan yana almak istersen onları bir tuple a almalısın mesela;
 
-```py
+```python
     fields=( ("başlık" , "slug" ), "içerik" , "aktif" )
 ```
 - başlık ve slug fieldsleri yan yana gelecektir
-
-<br>
-
 ### **FİELDS KÜMELERİ (fieldsets)**
 
-<br>
- 
 - tuple içinde tuple olacak şekilde yer alır 
 
-```py
+```python
 
     fieldsets=(
         ("başlık",{
@@ -837,26 +575,17 @@ class Blog(models.Model):
 ```
 ### NOT:
 - fieldsets tanımlamasını kullanacaksan  fields tanımlamasını kullanamazsın
-
-<br>
-
 ### raw_id_fields
 - Varsayılan olarak, Django'nun yöneticisi, şu alanlar için bir seçim kutusu arabirimi (select box) kullanır ForeignKey. Bazen, açılır menüde görüntülenecek tüm ilgili örnekleri seçmek zorunda kalmanın ek yüküne maruz kalmak istemezsiniz.
 
-
-```py
+```python
     raw_id_fields = ("newspaper",)
 ```
-
-
 # SLUG FİELD 
 
 - uygulamada herhangi bir blog detayına gitmek için slug bilgisine göre gitmemiz gerekiyor blog bilgisinin title bilgisine göre url ye ve seoya uygun bir formatta  otamatik olarak oluşturulur
 
--  models.py dosyasına çalıştıgın uygulamanın ilgili Class ın altına  tanımlamamızı yaparız
-
-<br>
-
+-  models.python dosyasına çalıştıgın uygulamanın ilgili Class ın altına  tanımlamamızı yaparız
 
 ``` python 
     class Blog(models.Model):
@@ -870,13 +599,8 @@ class Blog(models.Model):
         def __str__(self):
             return self.title
 ```
-<br>
-
 
 - slugField varsayılan olarak **null=False** ile gelir yani bu  doldurulması zorunlu alan demektir eğer biz bu alanı eklemeden önce veritabanında kayıtlı olan objeler varsa o objelere yeni bir sütün eklenecektir ve bu alanlara ne gelecek bunu belirtmemiz gerekiyor. bunu yaparken ilk başta bu alanı **null=True** değerini yapalım yani var olan objeler için boş değer kabul etsin biz var olan objeleri doldurduktan sonra tekrardan bu alanı **null=False** olrak değiştireceğiz 
-
-<br>
-
 
 ``` python 
     class Blog(models.Model):
@@ -890,17 +614,11 @@ class Blog(models.Model):
         def __str__(self):
             return self.title
 ```
-<br>
-
 ### Null dışında alabileceği bağzı paremetreler var
 
 - unique="True" : bu parametre her bir değer için farklı bir slug alanı olup olmadığını kontrol eder.benzersiz kimlik sağlar
 
 -  db_index = True : database açısından verilerin daha etkin şekilde ulaşmak için oluştrduğumuz kolonun indexlenmesini sağlar 
-
-
-<br>
-
 
 ``` python 
     class Blog(models.Model):
@@ -914,36 +632,27 @@ class Blog(models.Model):
         def __str__(self):
             return self.title
 ```
-<br>
-
 - yukarıda null=False değeri için varsayılan değer girebiliriz 
 
 ```python
     slug = models.SlugField( null=False , default="slug_name" , db_index=True )
 ```
-
 ### Ancak
 
 - **unique=True** : değeri için bu çakışacaktır unique tüm slug ifadelerin benzersiz olmasını sağlar ancak biz default ile varsayılan değer atadığımız için tüm değerlerde aynı ifade olacaktır
-
 ### SONUÇ OLARAK 
 
-
 - tanımlamamız aşağıdaki gibi olacak ve daha sonra migrate işlemi yapacağız veritabanında bir sütun oluşturmak için
-
-
 
 ```python 
     slug= models.SlugField(null=True,unique=True, db_index="True")   
 ```
 
-<br>
-
-- **models.py** dosyasına gidip oraya bir fonksiyon tanımlamamız gerekiyor fonksiyon veritabanındaki title bilgisine göre otomatik slug bilgisi oluşturacak ve bu oluşturulan bilgiyi kayıt edecek 
+- **models.python** dosyasına gidip oraya bir fonksiyon tanımlamamız gerekiyor fonksiyon veritabanındaki title bilgisine göre otomatik slug bilgisi oluşturacak ve bu oluşturulan bilgiyi kayıt edecek 
 
 - djangoda tanımlı olan models.Model sınıfının içinde tanımlı olan **save()** fonksiyonunu burda ezip yeni bir fonksiyon tanımlayacağız
 
-- models.py dosyasına slugify bilgisini import edelim
+- models.python dosyasına slugify bilgisini import edelim
 
 ```python
     from django.utils.text import slugify
@@ -951,7 +660,7 @@ class Blog(models.Model):
 
 - buraki save() fonksiyonunu ezip yeni bir fonksiyon tanımlayacağız 
 
-- tanımladığımız **self.slug** bilgisini import ettiğimiz **slugify** fonksiyonuna **self.title** bilgisini gönderdik ve kayıt etmesi için super()fonksiyonu ile base.py dosyasından save() fonksiyonunu çağırdık gelen değerleri ona gönderdik bu şekilde biz title bilgisine göre otomatik slug bilgisi oluşturmuş olduk
+- tanımladığımız **self.slug** bilgisini import ettiğimiz **slugify** fonksiyonuna **self.title** bilgisini gönderdik ve kayıt etmesi için super()fonksiyonu ile base.python dosyasından save() fonksiyonunu çağırdık gelen değerleri ona gönderdik bu şekilde biz title bilgisine göre otomatik slug bilgisi oluşturmuş olduk
 
 ```python
     def save(self,*args,**kwargs):
@@ -959,8 +668,7 @@ class Blog(models.Model):
         super().save(*args,**kwargs)
 ```
 
-- admin panele gidip kontrol ettiğimizde **slug alanı boş içerik kabul etmiyor** bunun için models.py dosyasıana tanımladığımız  ilgili sınıfının slug alanına ek paremetre olarak  blank="True" eklememiz gerekiyor.Bu şekilde imput alanı boş değer kabul edecektir. Biz zaten otomatik oluşturması için ayarladık bu yüzden böyle bir tanımlama yapmamız gerkir
-
+- admin panele gidip kontrol ettiğimizde **slug alanı boş içerik kabul etmiyor** bunun için models.python dosyasıana tanımladığımız  ilgili sınıfının slug alanına ek paremetre olarak  blank="True" eklememiz gerekiyor.Bu şekilde imput alanı boş değer kabul edecektir. Biz zaten otomatik oluşturması için ayarladık bu yüzden böyle bir tanımlama yapmamız gerkir
 
 ```python 
     slug= models.SlugField(null=True, blank=True ,unique=True, db_index="True")   
@@ -973,32 +681,19 @@ class Blog(models.Model):
 ```python
     slug= models.SlugField( null=True ,blank=True , unique=True, db_index=True ,editable=False )
 ```
-- **editable=False** ekledik bu slug alalnındaki imput alalnını kaldırır ve admin panelinden bu düzenlenemez ancak yine de sadece görmek istersen admin.py dosyasına gidip bunu ekleyebilirsin veya sadece o alanda görünmesini ancak sadaece okunabilmesini istersen aşağıdaki gibi tanımlama yapabilirsin
-
+- **editable=False** ekledik bu slug alalnındaki imput alalnını kaldırır ve admin panelinden bu düzenlenemez ancak yine de sadece görmek istersen admin.python dosyasına gidip bunu ekleyebilirsin veya sadece o alanda görünmesini ancak sadaece okunabilmesini istersen aşağıdaki gibi tanımlama yapabilirsin
 
 ```python
     class Blog_Admin(admin.ModelAdmin):
         list_display = ("id" , "title", "is_active" , "is_home" , "slug")
 ```
-<br>
-
-
 - tüm bu işlemleri yaptıktan sonra admin panele gidip tüm blogları birer kez kaydedersek otomatik olarak slug alanı oluşacaktır
-
-
 # KATAGORİLER İÇİN SLUG OLUŞTURMA
 
-
-- yukarıdaki işlemle aynsı işlemi yapacağız ancak ancak katagorilerin title bilgisi yok name bilgisi var ona dikkat et
-
-<br>
-<br>
-
-
-
+yukarıdaki işlemle aynsı işlemi yapacağız ancak ancak katagorilerin title bilgisi yok name bilgisi var ona dikkat et
 # SLUG BİLGİSNE GÖRE BLOG DETAY SAYFASI
 
-- çalıştığın uygulama içerisindeki urls.py dosyasına gidip önce bir urls yapsı oluşturalım
+- çalıştığın uygulama içerisindeki urls.python dosyasına gidip önce bir urls yapsı oluşturalım
 
 ``` python
     path("" ,views.ana_sayfa , name="anasayfa"),
@@ -1032,22 +727,16 @@ class Blog(models.Model):
 </div>
 
 ```
-
 ### NOT :
 
 - burdaki genel_bloglar.slug alanı for döngüsü ile aldığımız takma isimdir biz for döngüsü ile ilgili blog objelerini alıyoduk tüm objelere de slug alanları tanımladığımız için **genel_bloglar.slug** tanımlamsı yaptık
 
-- url in de içinde yazan **detay** uygulamada belirlediğimiz urls.py dosyasında gidilecek ismi temsil eder biz her bir sayfa için **name** tanımlaması yapmıştık bu da o name i temsil ediyor
-
-<br>
-<br>
-
-
+- url in de içinde yazan **detay** uygulamada belirlediğimiz urls.python dosyasında gidilecek ismi temsil eder biz her bir sayfa için **name** tanımlaması yapmıştık bu da o name i temsil ediyor
 # İMAGE FİELD
 
 - kullanıcı admin panelden resmi upload edecek . bizim uygulama içerisinde belirtmiş olduğumuz bir klasöre resim kayıt edilecek 
 
-- çalıştığın uygulama içerisinde models.py dosyasında oluşturduğun ilgili sınıfın içerisine  image alanı için aşağıdaki gibi tanımlama yapmıştık
+- çalıştığın uygulama içerisinde models.python dosyasında oluşturduğun ilgili sınıfın içerisine  image alanı için aşağıdaki gibi tanımlama yapmıştık
 
 ```python
      image =models.CharField(max_length=200)
@@ -1065,7 +754,7 @@ class Blog(models.Model):
 ```
 - upload_to="" parametresi içerisine ise ana dizin içerisine tanımlayacak olduğumuz klasör içerinde nereye kayıt edeceksen onun adını yazıyoruz ana dizinde her yerden erişilebileceği için biz blog uygulaması için ImageField tanımladıysak upload_to() parametresi içinde çalıştığın uygulama adını **upload_to("uygulama_adi")** yazmamız gerek
 
-- sonraki adımda root dizine uploads adında bir klasör oluşturuyoruz ve bunu root projedeki settings.py dosyasında tanımlamamız gerekiyor
+- sonraki adımda root dizine uploads adında bir klasör oluşturuyoruz ve bunu root projedeki settings.python dosyasında tanımlamamız gerekiyor
 
 ```python
     MEDIA_ROOT = BASE_DIR / "uploads"
@@ -1080,9 +769,9 @@ class Blog(models.Model):
 - model üzerinde değişiklik yaptıgın için migration olşturman gerekiyor
 
 - admin panelde yüklü olan resmi görüntülemek istesen hata alırsın bunun için ek bir ayar yapmamız gerekiyor
-- ilk başta root proje  içindeki urls.py dosyasına gideriz burda urlspatterns e köşeli karantez sonrasına + koyarak birkaç tanımlama yapacağız
+- ilk başta root proje  içindeki urls.python dosyasına gideriz burda urlspatterns e köşeli karantez sonrasına + koyarak birkaç tanımlama yapacağız
 
-- amaç şu ilgili upload dosyasının içerisindeki resimleri dışarı açmak bunun için ise static kullanımını açmamız gerek static metodunu urls.py dosyasına import edelim
+- amaç şu ilgili upload dosyasının içerisindeki resimleri dışarı açmak bunun için ise static kullanımını açmamız gerek static metodunu urls.python dosyasına import edelim
 
 ```python 
     from django.conf.urls.static import static
@@ -1093,7 +782,7 @@ class Blog(models.Model):
 ```python 
    from django.conf import settings
 ```
--  urls.py dosyasında urlspatterns da köşeli karantez sonrasına + koymuştuk bundan sonra
+-  urls.python dosyasında urlspatterns da köşeli karantez sonrasına + koymuştuk bundan sonra
 
 
 ```python 
@@ -1103,9 +792,7 @@ class Blog(models.Model):
 ```
 
 - ilk başta url e eriştik yani takma ad a  daha sonra ise  MEDIA_ROOT ile uploads dosyasına eriştik  amaç uploads dosyasındaki değerlere ulaşabilmek
-
 - artık admin panelde resim eklerken şuanki resmi görüntülemek istersen hata almayacaksın
-
 - dosyaları sayfada göstermek için ise ;
 
 ```django
@@ -1115,12 +802,6 @@ class Blog(models.Model):
 ```
 
 - blog çalıştığın uygulama adı olacak önceden static metodu ile çağırıyorduk artık resimerimizi bu şekilde veritabanından çağıracağız
-
-<br>
-<br>
-
-
-
 # HTML (CK) EDİTÖR
 
 - eğer wordpresdeki gibi yazdığın blog içeriğinin düzgün görüntülenmesi ve içeriğin oromatik olarak html taglarına dönüşmesi için eklenti kullanacağz eklentinin adı **ckeditor**
@@ -1134,16 +815,13 @@ class Blog(models.Model):
 ```
 - kurulumu yaptıktan sonra root projedeki settings dosyasına  install app e en alta ckeditor yazmalısın
 
-- daha sonra çalıştığın uygulamada models.py dosyasına ckeditor u import etmen gerek
+- daha sonra çalıştığın uygulamada models.python dosyasına ckeditor u import etmen gerek
 
 ```python
     from ckeditor.fields import RichTextField
 ```
 
-- artık models.py de nerde kullanmak istersen mesela description alalnında  TextField ataması vardı ve bu bize textarea oluşturuyordu
-
-<br>
-
+- artık models.python de nerde kullanmak istersen mesela description alalnında  TextField ataması vardı ve bu bize textarea oluşturuyordu
 
 ```python
     class Blog(models.Model):
@@ -1154,12 +832,8 @@ class Blog(models.Model):
         is_home = models.BooleanField(default=False)
         slug  = models.SlugField(null=False ,blank=True,unique=True, db_index=True,editable=False )
 ```
-<br>
 
 - description alanına ckeditör'ü çağırmamız gerek
-
-<br>
-
 
 ```python
     class Blog(models.Model):
@@ -1170,97 +844,62 @@ class Blog(models.Model):
         is_home = models.BooleanField(default=False)
         slug  = models.SlugField(null=False ,blank=True,unique=True, db_index=True,editable=False )
 ```
-<br>
 
 - artık burda RichTextField kullanabilriz modelde değişiklik yaptığın için migration oluşturman gerekiyor
-
 - admin panelde ckeditor görünecektir ancak sayfalara yorumlanmis şekiled gelmez yorumlanmış şekilde gelmesi için sayfalarında **{{blog.description}}** yerine **{{blog.description|safe}}** safe yazman yeterli artık descriptondan gelen veriler yorumlanıp da gelecektir 
-
 - eger gelen değerlerin belirli birkaç satırını almak istersen 
-
 - **{{blog.description|slice:"0:100"}}** 0dan baslar ve ilk 100 karekteri alır
-
 - etiketler de değer olarak sayılır bunları temizlemek için ek olarak **|striptags** yazmalısın
-
-
-<br><hr>
-<br>
-
-
 # DJANGO ORM (query set)
-
-<br>
 
 
 ## *Sorgu Kümeleri döndüren yöntemler*
 
-<br><hr>
+
 
 ### ***fileter()*** 
 
 - verilen paremetrelerle eşleşen objeleri döndürür
 
-```py 
+```python 
     b1= Blog.objects.fiter(is_active=True)
 ```
 - blog sınıfı içerisindeki objelerden is_active=Ture olan objeleri b1 değişeknine atamış olduk
-
-<br><hr><br>
 
 ### ***exclude()*** 
 
 - verilen paremetrelerde eşleşmeyen objeleri döndürür
 
-```py 
+```python 
     b1= Blog.objects.exclude(is_active=True)
 ```
 - blog sınıfı içerisindeki objelerden is_active=False  olan objeleri b1 değişeknine atamış olduk
-
-<br><hr><br>
-
 
 ### ***annotate()*** 
 
 - veri tabanında genelde sayısal işlem yapmakta kullanırız mesela ülkeler veya şehirlerde yaşayan insanların sayısı yaş ortalaması veya diğer istatiskel şeyleri hesaplamak için kullanırız bunu daha iyi anlamak için bir video buldum : **[VİDEO URL](https://www.youtube.com/watch?v=KbwmdKl-QbI)**
 
-
-<br><hr><br>
-
 ### ***alias()*** 
 
 - annotate ile aynı işemi yapar ancak açıklama eklemek yerine ifadeyi daha sonra başka QuerySet yöntemlerle yeniden kullanmak üzere kaydeder  filtreleme, sıralama veya karmaşık bir ifadenin parçası olarak kullanıldığı durumlarda kullanışlıdır 
-
 - özetle tüm verileri almak yerine  verileri filitreleyerek daha iyi performansla sonuçlanması sağlarız
-
 - bunu daha iyi anlamak için bir video buldum : **[VİDEO URL](https://www.youtube.com/watch?v=KbwmdKl-QbI)**
-
-
-<br><hr><br>
-
 ### ***order_by()*** 
 
 - query set ile gelen objeleri sıralamak için kullanılır id ye göre sıralayabilirsin eklenme , güncelleme tarihine göre sıralayabilirsin veya bunları tam tersine de çevirebilirsin . son eklenen blogu ilk başta göndermek gibi
 
-```py
+```python
     b1=Blog.objects.all().order_by("-date")
 ```
 
 - **" - "** ifadesi terse çevrimek anlamındadır yani son eklenen blog ilk gösterilecektir parametre içerisinde belittiğind eğere göre sıralama yapabilirisin
-
-
-
-<br><hr><br>
-
 ### ***values()*** 
 
 - Yinelenebilir olarak kullanıldığında model örnekleri yerine sözlükler döndüren bir QuerySet döndürür
-
 - Bu sözlüklerin her biri, anahtarlar model nesnelerinin nitelik adlarına karşılık gelen bir nesneyi temsil eder.
-
 - shell de bir örnek yapalım : 
 
-
-```py
+```python
     from genelsayfalar.models import Blog  
     
     k1=Blog.objects.values("title", "id")
@@ -1287,22 +926,9 @@ class Blog(models.Model):
 ```
 
 - **" - "** ifadesi terse çevrimek anlamındadır yani son eklenen blog ilk gösterilecektir parametre içerisinde belittiğind eğere göre sıralama yapabilirisin
-
-
-
-<br><hr><br>
-
-
-
-
-
-
-
-
 # DİNAMİK KATAGORİ MENÜSÜ
 
-
--  biz views sayfasına Blog sınıfını models.py dosyasından eklemiştik artık aynı yerden catagory sinifini da çağırmamız gerekiyor
+-  biz views sayfasına Blog sınıfını models.python dosyasından eklemiştik artık aynı yerden catagory sinifini da çağırmamız gerekiyor
 
 ```python
     from blog.models import Blog,Catagory
@@ -1313,8 +939,6 @@ class Blog(models.Model):
     "catagories":Catagory.objects.all()
 ```
 - bu şekilde tanımlama yaparsak veritabanında catagory tablosunda kaç tane değer varsa hepsini index metodu ile sayfalara göndeririz aynı şeyi blog metoduna da yapabilirsin
-
-
 - daha sonra sayfa üzerinde  bu değeri almak için for döngüsünden yararlanırız catagory sayfasına git ve tekrarlanmasını sitediğin ani verilerin gelecek alan yerlerini döngü içine al
 
 ``` django
@@ -1327,9 +951,7 @@ class Blog(models.Model):
 
 - catagories den gelen değerleri catagory değerine at ve aşağıda {{catagory.name}} tanımlaması ile sinif üzerinden gelen name değerini aldık
 - veritabanından gelen değerlerin hepsi küçük harfle gelir bunu düznelemk istersen filitreleri kullanabilirsin **|title** filtresini kullanırsan sadece baş harfleri büyük olur
-
-- catagory için lik tanımlaması yapmak istersen **urls.py** dosyasına gidip **path** oluşturman gerekiyor
-
+- catagory için lik tanımlaması yapmak istersen **urls.python** dosyasına gidip **path** oluşturman gerekiyor
 
 ``` python
     path("category/<slug:slug>" , views.blog_by_category , name="blog_by_category"),
@@ -1357,15 +979,13 @@ class Blog(models.Model):
 
 - ilişkilendirme id bilgisine göre yapılır 
 
-- ilk başta **models.py** dosyasına gidip Blog sınıfına catagory tanımlaması yapalım
+- ilk başta **models.python** dosyasına gidip Blog sınıfına catagory tanımlaması yapalım
 
 ```python
     category= models.ForeignKey(Category, on_delete=models.CASCADE)
 ```
 
 - parantez içerisine ilk paremetre olarak kullanılacak olan katagori sınıfının adı (Category ) ikinci paremetre ise
-
-
 ### NOT 
 
 - **on_delete = models.CASCADE** bu paremetre eğer katagori silinirse onunla ilişkili olan bloglar da veritabanından  silinecektir
@@ -1383,29 +1003,20 @@ class Blog(models.Model):
 ```
 
 -  bizim şuan veritabanıda kayıtlarımız var ve  var olan kayıtlar için hangi değer ataması yapmamız gerekiyor nasıl bir yol izlememiz gerekiyor
-
-
 - nul=True değerini verip migarte ederek sonra bu değeri False çevirerek tekrar migrate ederiz bu birinci yol
-
 - veya varsayılan bir değer veririz sonra bunu kaldırarak null =False yaparız bu şekilde bize hata vermeyecektir
-
-<br>
-<br>
 
 
 # KATAGORİYE GÖRE BLOG FİLİTRELEME
 
-- admin panele filtireleeme yapmak için admin.py dosyasına gidip oluşturduğun blog sınıfı içine 
+- admin panele filtireleeme yapmak için admin.python dosyasına gidip oluşturduğun blog sınıfı içine 
 
 ```python
     list_filter = ("category", "is_active" , "is_home" ,) 
 ```
 
 - böyle bir tanımlama yaptıktan sonra admin panelde sağda catagory is_active ve is_home bilgisine göre filitreleme işlemi yapabilrsin
-
 - kategoriye göre filitreleme işlemini sayfa üzerinde nasıl yapacağız?
-
-
 - urldeki slug bilgisini alarak bir responsu ona göre filitreleyip geriye göndermemiz gerekiyor bunun için views dosyasına gidip bir method tanımlayacağız
 
 ```python
@@ -1426,7 +1037,6 @@ def blog_by_category(request,slug):
 
 - buraya kadar catagory metoduna ulaştık daha doğrusu Blog sınıfında üretilen her objenin katagori bilgisine ancak  biz katagori bilgisinde slug alanına ulaşmmaız gerekiyor bu bilgiye ulaşmak için  başka bir sınıf olan Catagory sınıfının slug metoduna ulaşmalıyız
 
-
 - bu  metoda ulaşmak için catagoryden sonra __sınıfınSlugMetoduAdı yani ;
 
 ```python
@@ -1436,7 +1046,6 @@ def blog_by_category(request,slug):
 - burdan gelen slug bilgisini paremetre ile gelen slug bilgisine eşitlememiz atmamız  gerekiyor
 
 - eğer blog yoksa ve bunu sayfada görüntülemek istersen
-
 
 ```django
 {% if blogs|length > 0  %}
@@ -1448,18 +1057,12 @@ def blog_by_category(request,slug):
         <div class="alert alert-warning" > blog yok</div>
 {% endif %}
 ```
-
-
 # MANY TO MANY İLİŞKİ TİPİ (ÇOKA ÇOK)
 
 -  many to one ilişki tipinde bir blog sadece bir tane kategoriye ait olabiliyordu bunda ise bir blog birden fazla katagoriye ait olabilir
-
 - iki model arasında çoka çok ilişki tipi 
-
-- models.py dosyasına geliyoruz katagori ya da blog açısından bakarak kaydı nerden almak istiyosan yani katagoriye ait olan blog bilgileriyle mi daha çok ilgileniyosun ya da blog modelinden bakıp elde etmiş olduğun bir blog üzerinden o bloga ait olan katagori bilgilerini almayı mı tercih ediyosun ve buna göre hangisini almayı tercih edersen  o tablo içerisine bir manytomanyField eklemen gerekiyor
-
+- models.python dosyasına geliyoruz katagori ya da blog açısından bakarak kaydı nerden almak istiyosan yani katagoriye ait olan blog bilgileriyle mi daha çok ilgileniyosun ya da blog modelinden bakıp elde etmiş olduğun bir blog üzerinden o bloga ait olan katagori bilgilerini almayı mı tercih ediyosun ve buna göre hangisini almayı tercih edersen  o tablo içerisine bir manytomanyField eklemen gerekiyor
 - mesela Blog tablosuna gittin ve aldığın her blog bilgisinin de hangi katagoriye ait olduyunu alma ihtiyacı duyalım  bu durumda blog sınıfına manytomanyField ekleyelim
-
 - bir bloga ait olan  catagories lerele ilgileniyoruz
 
 ```python
@@ -1468,20 +1071,16 @@ def blog_by_category(request,slug):
 
 -  bu şekilde bir tanımlama yaptık ve parantez içersine hangi sınıfı referans alacaksa o sınıfın adını yazdık
 
--  
-
 ```python
     list_filter = ("category",)
 ```
 
-- eğer admin.py dosyasına bçyle bir tanımlama yaptıysan hata verecektie şimdilik bu filitreyi kaldır
+- eğer admin.python dosyasına bçyle bir tanımlama yaptıysan hata verecektie şimdilik bu filitreyi kaldır
 
 - models dosyasında bir değişiklik yaptıgımız için migrate etmemiz gerekiyor
-
 # MANY TO MANY İLİŞKİ TİPİNDE MODEL SORGULAMA
 
-
-- ilgili blogun hangi katagoriye ait olduğunu admin panelde görüntülemek için admin.py dosyasına gidip ilgili sınıf a  list_display tanımlaması oluşturmuştuk ve bu bloglarda hangi katagorilerde ait olduğunu görüntülemek için bir fonksiyon oluşturacağız ve  oluşturacağımız fonkisyon isimini list_display içerisinde belirtiyor olmamız gerekiyor.
+- ilgili blogun hangi katagoriye ait olduğunu admin panelde görüntülemek için admin.python dosyasına gidip ilgili sınıf a  list_display tanımlaması oluşturmuştuk ve bu bloglarda hangi katagorilerde ait olduğunu görüntülemek için bir fonksiyon oluşturacağız ve  oluşturacağımız fonkisyon isimini list_display içerisinde belirtiyor olmamız gerekiyor.
 
 - mesela şöyle bir fonksiyon tanımlayalım.
 
@@ -1515,18 +1114,8 @@ def blog_by_category(request,slug):
 -  bu şekilde admin panele gönderdiğimiz  ul ve li etiketleri yorumlanacaktır 
 
 - **mark_safe:**   html etiketlerinin yorumlanmasını sağlar fonksiyonda admin panelde ul ve li etiketlerini kullandığımız için yorumlanmasını da isteriz bunun için makrk_safe import ettik ve kullandık
-
-
-
-- eğre bu kategorileri filitrelremk istersen admin panlde sağ tarafta bunun için admin.py dosyasında tanımladığımız BlogAdmin sınıfında list_filter e models.py Blog sınıfnda en son tanımladığımız çok a çok ilişkisini kurduğumuz metodun adını yazmalısın biz ordakine categories demiştik bu yüzden list_filter e categories yazarız
-
-
-<br>
-<br>
-
-
+- eğre bu kategorileri filitrelremk istersen admin panlde sağ tarafta bunun için admin.python dosyasında tanımladığımız BlogAdmin sınıfında list_filter e models.python Blog sınıfnda en son tanımladığımız çok a çok ilişkisini kurduğumuz metodun adını yazmalısın biz ordakine categories demiştik bu yüzden list_filter e categories yazarız
 # MANY TO MANY İLİŞKİ TİPİ (SAYFA ÜZERİNDE SORGULAMA)
-
 
 ```python
     def blog_by_category(request,slug):
@@ -1538,11 +1127,9 @@ def blog_by_category(request,slug):
 ```
 
 - burda blog üzerinden bir filitreleme yapmıştık ve bu filitrelemeye de category ve is_active alanlarını atamıştık ve  blog açısından baktığımızda  her almış olduğumuz blogun kategori bilgisine gidiyoruz  böyle değilde biz ilk başta kategoriyi almış olsak ve kategori üzerinden de  o kategoriye ait olan blog bilgilerini almış olsak çok daha güzel  olur 
-
-
 - **"blogs": Category.objects.get(slug=slug)** context e böyle bir tanımlama yaptık biz burda Category sınıfında ulaştık ve budan .objects diyerrek nesneleri aldın ve tekrar .all diyerek bütün nesneleri aldık bu işlem nasıl çalışıyor örneğin 
 
-- mesela katagorilerimizden birinin adı web programlama  web porgramlama ile ilişkili olan tablo models.py dosyasında tanımladığımız Blog sınıfındaki bloglara erişmek için özel bir isimlerndirme var onu kullanıyopruz
+- mesela katagorilerimizden birinin adı web programlama  web porgramlama ile ilişkili olan tablo models.python dosyasında tanımladığımız Blog sınıfındaki bloglara erişmek için özel bir isimlerndirme var onu kullanıyopruz
 
 - hangi tabloya geçiş yapacaksak (burda blog modeline ) adını yazarız ve _set deyerek ulaşmış oluyoruz  
 
@@ -1557,27 +1144,16 @@ def blog_by_category(request,slug):
 ```
 -  bu şekilde ilişkili olan katagöride  aktif olan blogları alırız 
 
-- eğer bir blogun kategorierlini kalfırmak istersen kategorisi olmayan bir blog oluşturmak istersen hata alırsın bunun için models.py dosyasında Blog sınıfına tanımladığımız categories metoduna şöyle bir tanımlama yapmıştık;
-
+- eğer bir blogun kategorierlini kalfırmak istersen kategorisi olmayan bir blog oluşturmak istersen hata alırsın bunun için models.python dosyasında Blog sınıfına tanımladığımız categories metoduna şöyle bir tanımlama yapmıştık;
 
 ```python
     categories = models.ManyToManyField(Category)
 ```
 
-
 - bu tanımlamaya ek olarak parentez içerisine blank=True tanımlaması yapmamız gerekiyor bu boş değer alsın demek 
-
-
 # KULLANICI MODELİ OLUŞTURMA VE YAZAR BLOG İLİŞKİSİ
 
-<br>
-
-- ilgili uyguladaki models.py dosyasında yeni bir sınıf oluşturuyoruz ve bu sınıfı "auth.User" ile ilişkilendiriyoruz ancak ilişkilendirme işlemi yaparken **OneToOneField** ilişki tipini kullanıyoz aslında bu ilişki tipi **models.ForeignKey** ile aynı işi yapıyor ancak bunda sadece aynı isimden sadece bir tane kullanıcı oluştururuz foregin key i blog sınıfında kullandık nedeni ise bir kullanıcı birden fazla blog yazabilsin diye
-
-
-
-<br>
-
+- ilgili uyguladaki models.python dosyasında yeni bir sınıf oluşturuyoruz ve bu sınıfı "auth.User" ile ilişkilendiriyoruz ancak ilişkilendirme işlemi yaparken **OneToOneField** ilişki tipini kullanıyoz aslında bu ilişki tipi **models.ForeignKey** ile aynı işi yapıyor ancak bunda sadece aynı isimden sadece bir tane kullanıcı oluştururuz foregin key i blog sınıfında kullandık nedeni ise bir kullanıcı birden fazla blog yazabilsin diye
 
 ```python
     class Blog(models.Model):
@@ -1601,11 +1177,6 @@ def blog_by_category(request,slug):
             return self.title
 ```
 
-<br>
-
-
-<br>
-
 
 ```python
     class Yazar(models.Model): 
@@ -1624,11 +1195,7 @@ def blog_by_category(request,slug):
             return self.isim  
 ```
 
-<br>
-
 - biz Blog  sınıfını ilgili alana zaten göndermiştik
-
-<br>
 
 ```python
     #uygulamadaki views dosyası
@@ -1639,19 +1206,13 @@ def blog_by_category(request,slug):
             }
             return render(request , "genelsayfalar/ana_sayfa/anasayfa.html" ,context)
 ```
-<br>
-
 - blog sınıfında **blogun_yazari**  alanı var biz bu alanı kullanarak oluşturduğumuz modele ulaşabiliriz **(YAZAR)**
-
-
-<br>
 
 ```django
     <span>
         {{genel_bloglar.blogun_yazari.yazar_adi.get_full_name|title}}
      </span>
 ```
-<br>
 
 - genel_bloglar for döngüsünde kullandığımız takma addı bu döngüde sözlük yapısı ile sayfaya gönderdiğimiz Blog objelerine ulaşıyoduk 
 
@@ -1661,46 +1222,24 @@ def blog_by_category(request,slug):
 
 - ve bu sınıfta da **" auth.User "** sınıfı ile **birebir ilişki kurduğumuz alan var** burdaki alan ile kullancıların kısa adına e posta adresine veya ad soyad bilgilerine ulaşabileceğiz
 
-
-<br>
-
 ```django
     <span>
         {{genel_bloglar.blogun_yazari.instagram_adresi}}
      </span>
 ```
-<br>
-<br>
-
-
-
 # SAYFALAMA (PAGİNATİON)
 
-<br>
-
-
 - web sayfasında veritabanından gelen tüm blogları sayfada toplayamayız bu durm hem sayfanın çok kalabalık görünmesi  hem de tüm blogları yüklemeye çalışacağı için istemciye yüklenecektir bunun önüne geçmek için sayfalarımızda fazla olan postları sayfalandırarak bu durumu düzeltmiş olacağız 
-
-
 - ilgili uygulamanın views dosyasına pagination metodunu import edelim 
-
-<br>
 
 ```python
     from django.core.paginator import Paginator , EmptyPage, PageNotAnInteger
 ```
-<br>
-
 
 - ilk başta sayfada gösterilecek olan blog nesnelerinin bir değişkene atarız
-
-
 - daha sonra Paginator fonksiyonunu çağırırız birinci paremetrede objeleri tuttuğumuz değişken ikinci paremetrede ise sayfada kaç tane görüntüleneceğini belirtiriz
 
-<br>
-
 ```python
-
     def ana_sayfa(request):
         
         blog_list = Blog.objects.filter(is_active=True, is_home=True)
@@ -1727,13 +1266,9 @@ def blog_by_category(request,slug):
         }
         return render(request , "genelsayfalar/ana_sayfa/anasayfa.html" ,context)
 ```
-<br>
 
 -   **page = request.GET.get('page')** ile get metodunu kullanarak sayfadaki blogların bilgisini aldık try except ile olası karşılaşılacak hatalar için bağzı hata kodalrı döndürdük en sonuda da sayfaya göndermek için context sözlüğüne gönderdik 
-
-
 - kullancıların bloglar arasında gezinmesi yani ileri geri çubuklarının eklenmesi için arayüz sağlamamız lazım
-
 
 ```Django
     {% for genel_bloglar in blogs  %}
@@ -1758,22 +1293,7 @@ def blog_by_category(request,slug):
     </div>
 ```
 
-
 - blogs yazan kısma views dosyasında sayfaya gönderdiğin sözlük yapsındaki anahtar değeri gelecek ve bu tanımlamayı for döngüsünden hemen sonra kullanmalısın
-
-
-
-<br>
-
-
-# SAYFADA ARAMA YAPMAK
-<br>
-
-
-
-
-<br>
-
 # AUTH NEDİR 
 
 - kullanıcılar için hesap oluşturma yetkilendirme işlemidir işlemidir.
@@ -1804,38 +1324,23 @@ def blog_by_category(request,slug):
 ```
 
 - user.is_authenticated metodu sayfaya biz request gnderiyoruz bu objenin içerisinde de   user.is_authenticated metodu var bu sitede bir sessionid varmı kontrol eder eğer sessionid varsa çıkış yap butonu gösterilir yoksa da giriş yap ve kayıt ol butonaları gösterilir
-
-<br>
-<br>
-
-
-
-
 # ACCOUNT UYGULAMASI
 
-
-
 - Kullanıcı yetkilendirme ve oturum açma işlemlerini modüler hale getirmek ve daha fazklı uygulamalarda da kullanabilmek için yeni bir uygulama ekleyeceğiz 
-
-- Eklediğimiz uygulamayı root projeye bağlıyoruz , **urls.py** ekleyip  dosyamızda linklerimizi oluşturuyoruz , **views.py** dosyasında gerekli fonksiyonlarımızı yazıyoruz , templates dosyası oluşturup kullanacağımız şablonları ekliyoruz. tüm bu işlemler bittikten sonra **root projedeki urls.py** dosyasına uygulamada tanımladığız urls.py dosaydını include ediyoruz
-
-- views.py dosyadına redirect ve render fonkisyonlarının eklendiğinden emin olmalıyız.
-<br>
+- Eklediğimiz uygulamayı root projeye bağlıyoruz , **urls.python** ekleyip  dosyamızda linklerimizi oluşturuyoruz , **views.python** dosyasında gerekli fonksiyonlarımızı yazıyoruz , templates dosyası oluşturup kullanacağımız şablonları ekliyoruz. tüm bu işlemler bittikten sonra **root projedeki urls.python** dosyasına uygulamada tanımladığız urls.python dosaydını include ediyoruz
+- views.python dosyadına redirect ve render fonkisyonlarının eklendiğinden emin olmalıyız.
 
 ```python
     path("account/" , include("account.urls")),
 ```
-<br>
 
 ```python
     from django.shortcuts import redirect, render
 ```
-<br>
 
 - Biz bu uygulamamızda Giriş yap , Kayıt ol , Çıkış yap ve Profil linkleri oluşturacağız ve bu linkleri sitemizde navbar da göstereceğiz . Bunun için kullanıcının giriş yapıp yapmadığını kontrol etmemiz gerekiyor. Eğer giriş yapmışsa **Profil** ve **Çıkış** yap linkleri görünecek , kullanııc giriş yapmamışsa **Giriş yap** ve **Kayıt  ol** linleri görünecektir
-<br>
 
-```py
+```python
     {% if user.is_authenticated %}
         <a href="#">Profil</a>
         <a href="#">Çıkış Yap</a>
@@ -1844,21 +1349,13 @@ def blog_by_category(request,slug):
         <a href="#">Kayıt Ol</a>
     {% endif %}
 ```
-
-
-
-
-
 # LOGİN SAYFASI 
 
 - Login sayfasına  formlarımızı oluşturalım
 
-- Kullanıcıların inputlara girdiği verileri  action parametresi ile işleyeceği bir alana göndermemeiz gerekiyor.Biz bu örnekte yine aynı fonksiyon olan **giris_yap** fonksiyonuna gönderdiğimizi varsayalım. Bunun için action kısmına o fonksiyonun çalıştığı urls yapısına tekrar göndermemiz gerekiyor.Bu da **urls.py** dosyasında tanımladığımız link in **name** bilgisini yazmalıyız
+- Kullanıcıların inputlara girdiği verileri  action parametresi ile işleyeceği bir alana göndermemeiz gerekiyor.Biz bu örnekte yine aynı fonksiyon olan **giris_yap** fonksiyonuna gönderdiğimizi varsayalım. Bunun için action kısmına o fonksiyonun çalıştığı urls yapısına tekrar göndermemiz gerekiyor.Bu da **urls.python** dosyasında tanımladığımız link in **name** bilgisini yazmalıyız
 
-<br>
-
-
-```py
+```python
 from django.urls import path
 from . import views 
 
@@ -1869,15 +1366,10 @@ urlpatterns = [
     path("profil/" , views.profil , name="profil"),
 ]
 ```
-<br>
 
 - Yukarıda tanımladığımız fonksiyonlarda verileri GET metodu ile sayfalarda çağırırız. POST metodu ile sayfalardan veya formlardan verileri güvenli bir biçimde işlenmesi için  gönderirirz. POST metodu GET metoduna göre daha güvenlidir bu yüzden biz bu işlemi yaparız. 
-
-- Sayfagı GET requesti ile çağırıyorduk bunun için bir fonksiyon tanımlamıştık zaten eğer POST requesti için farklı bir fonksiyon yapıp verileri o fonksiyonda işlemek isteyebilirsin .Burda sadece hangi fonskiyonda işlem yapacaksan **urls.py** dosyasında yeni bir path tanımlayıp yeni bir fonksiyon oluşturmaktır. 
-
+- Sayfagı GET requesti ile çağırıyorduk bunun için bir fonksiyon tanımlamıştık zaten eğer POST requesti için farklı bir fonksiyon yapıp verileri o fonksiyonda işlemek isteyebilirsin .Burda sadece hangi fonskiyonda işlem yapacaksan **urls.python** dosyasında yeni bir path tanımlayıp yeni bir fonksiyon oluşturmaktır. 
 - Ancak biz bu örnkete farklı bir fonksiyon kullanmadan aynı fonksiyon üzerinden işlemlerimize devam edeceğiz.
-
-<br>
 
 ```django
     <form action="{% url 'giris_yap' %} method="POST">
@@ -1899,18 +1391,13 @@ urlpatterns = [
 
 - Formdan POST metodu ile gelen verileri (username ve password) bir değişkene atıyoruz. Bunun için ilk başta gelen methodun GET mi POST mu onu öğrenmeliyiz. Bu değerler request in içindeki POST objesinde saklanır. POST objesindeki işleyeceğimiz veriler de sayfadaki formda tanımladığımız **name bilgileridir** yani ;
 
-<br>
-
 ```html
     <input type="text" class="form-control" id="usrnm" name="username">
     <input type="password" class="form-control" id="psw" name="password">
 ```
-
-<br>
-
 - Gelen verileri bir değişkene atarız
 
-```py
+```python
 if request.method =="POST":
             username= request.POST["username"]
             password= request.POST["password"]
@@ -1918,10 +1405,7 @@ if request.method =="POST":
 
 - Daha sonra ise authenticate metodu ile bu değerleri karşılayan bir kullanıcımız var mı onu test ederiz. authenticate methodunun ilk paremetresi **request** dir diğer parametreler ise oluşturduğumuz değişkenler (username ve password) .Yine bu değerleri bir değişkene atarız kullanıcının olup olmadığını sınamak için .
 
-
-<br>
-
-```py
+```python
     if user is not None:
         login(request, user)
         return redirect("anasayfa")
@@ -1931,21 +1415,16 @@ if request.method =="POST":
 
 ```
 
-<br>
-
 - Eğer bu değerleri karşılayan tanımlanmış bir kullanıcı varsa login fonksiyonunu çağırırız . Login fonksiyonun ilk paremetresi request ikinci parametresi ise authenticate metodu ile oluşturduğumuz değişkendir
 
 - Eğer bu değişkenin değeri varsa login işlemi gerçekleştirilir ve redirect methodu ile anasayfaya yönlendiririz. 
 
 ### NOT:
-- *Redirect metoduna parametre olarak urls.py dosyasındaki tanımladığımız pathlerdeki **name değerlerini** yazarız.*
-<hr>
+- *Redirect metoduna parametre olarak urls.python dosyasındaki tanımladığımız pathlerdeki **name değerlerini** yazarız.*
 
 - Eğer kullanıcı yanlış bilgi girmiş ise else blogu çalışır ve buda kullanıcıya bir mesaj gönderebiliriz.
 
-<br>
-
-```py
+```python
     else:
         return render(request, "Account/giris_yap/giris_yap.html" , {  "error" : "kullancı adı veya şifre yanlış"})
 ```
@@ -1959,11 +1438,7 @@ if request.method =="POST":
     {% endif %}
 ```
 
-<br>
-<br>
-
-
-```py
+```python
 # " TAM KOD " giris_yap fonksiyonu bu şekilde olmalıdır.
 
     from django.contrib.auth import authenticate , login
@@ -1989,7 +1464,3 @@ if request.method =="POST":
 
         return render(request, "Account/giris_yap/giris_yap.html",context)
 ```
-<br>
-<br>
-
-# KAYIT OL (register) Sayfası
